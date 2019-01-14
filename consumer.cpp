@@ -3,12 +3,20 @@
 #include<string.h>
 #include"ttt.h"
 using namespace std;
-//structure
+//cart structure
 struct cons{
   int id;
   int qnt;
   int cst;
 };
+//product structure
+struct product{
+  int sno;
+  char name[20];
+  int price;
+};
+
+//line function
 void hline(int len){
   for(int i=0; i < len; i++){
   cout << "-";
@@ -16,23 +24,41 @@ void hline(int len){
 }
 cons cart[10];
 void buy(){
+  product prod[4];
+  //1
+  prod[0].sno = 1;
+  strcpy(prod[0].name,"Handwash");
+  prod[0].price = 200;
+  //2
+  prod[1].sno = 2;
+  strcpy(prod[1].name,"Lipstick");
+  prod[1].price = 100;
+  //3
+  prod[2].sno = 3;
+  strcpy(prod[2].name,"Cream   ");
+  prod[2].price = 150;
+  //4
+  prod[3].sno = 4;
+  strcpy(prod[3].name,"Lipbalm ");
+  prod[3].price = 75;
+    
 
   int quant;
-  int cost[4] = {200 , 50, 150, 75};
-  int k = -1;
   system("clear");
   char ichoice[10];
   do{
   cout << "\n Welcome to Client Area" << endl
   << " Chose the number of the corresponding product you want to choose: " << endl
   << "\n MENU \n" ;
-  hline(27);
-  cout << "\n| 1] | Handwash   | Rs" << cost[0] << "  |\n| 2] | Lipsticks  | Rs" << cost[1] << "   |\n| 3] | Cream     | Rs" << cost[2]<< "  |\n| 4] | Lipbalm    | Rs" << cost[3]<< "   |\n| 5] | Back       |\n";
-  hline(27);
+  hline(22);
+  for(int b=0;b<4;b++){
+  cout << "\n|" << prod[b].sno <<" |" << prod[b].name<<  " | Rs" << prod[b].price << " | \n";
+  }
+  hline(22);
   cout << "\nWhat would you like to purchase: ";
   cin >> ichoice;
 
-  switch(ichoice[0]) {
+  switch(ichoice) {
     case '1':
     cout << "Enter quantity: ";
     cin >> quant;
@@ -109,6 +135,9 @@ void chk(){
 }
 //MENU
  int client() {
+
+
+
 		system("clear");
 		char cchoice[10];
 

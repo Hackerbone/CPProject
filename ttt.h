@@ -121,7 +121,7 @@ void ttt()
 	board();
 	if(i==1){
 		cout<<"\aPLAYER "<<--player<<" WINS";
-    
+
     for (int i = 1; i < 10; i++) {
 
       if(square[i] == 'O' || square[i] == 'X'){

@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"ttt.h"
+//#include"ttt.h"
 using namespace std;
 
 struct suppliers
@@ -385,10 +385,10 @@ void login()
     system("clear");
     client();
   }
-  else if(strcmp(iid,"1807") == 0 && strcmp(ipass,"F") == 0){
-    system("clear");
-    ttt();
-  }
+//   else if(strcmp(iid,"1807") == 0 && strcmp(ipass,"F") == 0){
+//     system("clear");
+//     ttt();
+//   }
 
   else{
     cout << "Invalid Login , Please signup (press enter to continue)\n";

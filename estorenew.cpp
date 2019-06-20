@@ -22,6 +22,8 @@ class supplier{
     public:
         void supplier_signup()
         {
+            clear();
+            cout << "Enter your Details\n";
             cout << "Enter your first name:";
             gets(supplier_name);
 
@@ -44,7 +46,37 @@ class supplier{
             gets(supplier_password);
             cout << endl;
         }
-        void supplier_menu_input()
+        void supplier_menu()
+        {
+            char x;
+            do{
+                cout << "Welcome To Supplier Area. \nDo you have an Existing account?\n" <<
+            "[1]Yes [2]No (Press 0 to exit)";
+                cin >> x;
+                if (x == '1')
+                {
+                    clear();
+                    supplier_login();
+                }
+                else if (x == '2')
+                {
+                    clear();
+                    supplier_signup();
+                }
+                else if (x == '0')
+                {
+                    break;
+                }
+
+                else
+                {
+                    cout << "Enter valid input";
+                }
+
+            } while (x != '0');
+            }
+        
+     void supplier_product_input()
         {
             cout << "Welcome To Supply Area. \nEnter Prouct name\n";
             gets(product_name);
@@ -97,6 +129,7 @@ void menu(){
 }
 int main(){
     system("clear");
+
     menu();
     return 0;
 }

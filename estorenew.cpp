@@ -10,90 +10,119 @@ void clear(){
 
 class supplier{
     //about supplier
-    char supplier_name[20];
-    char supplier_password[50];
-    char supplier_sname[20];
-    char supplier_username[20];
+    string supplier_name;
+    string supplier_password;
+    string supplier_sname;
+    string supplier_username;
     //Product
-    char product_name[50];
+    string product_name;
     double product_cost;
-    char product_color[12];
-    char product_symbol;
+    string product_color;
+    string product_symbol;
     public:
+        void supplier_product_input()
+        {
+            cout << "Welcome To Supply Area. \nEnter Prouct name\n";
+            cin >> product_name;
+            cout  << "Enter Product Cost";
+            cin >> product_cost;
+            cout << "Enter Product Color\n";
+            cin >> product_color;
+            cout << "Enter Product Color Symbol in [color] form\n";
+            cin >> product_symbol;
+        }
         void supplier_signup()
         {
             clear();
             cout << "Enter your Details\n";
-            cout << "Enter your first name:";
-            gets(supplier_name);
-
+            cout << "Enter your first name: ";
+            cin >> supplier_name;
+            cout << endl;
             cout << "\nEnter your last name: ";
-            gets(supplier_sname);
-
+            cin >> supplier_sname;
+            cout << endl;
             cout << "\nEnter your Username: ";
-            gets(supplier_username);
-
+            cin >> supplier_username;
+            cout << endl;
             cout << "\nEnter your password: ";
-            gets(supplier_password);
+            cin >> supplier_password;
             cout << endl;
         }
         void supplier_login()
         {
+            int present;
+            supplier x;
             cout << "Enter your Username: ";
-            gets(supplier_username);
+            cin >> x.supplier_username;
 
             cout << "\nEnter your password: ";
-            gets(supplier_password);
+            cin >> x.supplier_password;
             cout << endl;
-        }
-        void supplier_menu()
-        {
-            char x;
-            do{
-                cout << "Welcome To Supplier Area. \nDo you have an Existing account?\n" <<
-            "[1]Yes [2]No (Press 0 to exit)";
-                cin >> x;
-                if (x == '1')
-                {
-                    clear();
-                    supplier_login();
-                }
-                else if (x == '2')
-                {
-                    clear();
-                    supplier_signup();
-                }
-                else if (x == '0')
-                {
-                    break;
-                }
-
-                else
-                {
-                    cout << "Enter valid input";
-                }
-
-            } while (x != '0');
+            supplier_login_check(x, present);
+            if(present == 1){
+                supplier_product_input();
             }
-        
-     void supplier_product_input()
-        {
-            cout << "Welcome To Supply Area. \nEnter Prouct name\n";
-            gets(product_name);
-            cout << "Enter Product Cost";
-            cin >> product_cost;
-            cout << "Enter Product Color\n";
-            gets(product_color);
-            cout << "Enter Product Color Symbol in [color] form\n";
-            gets(product_color);
-    }
-    void supplier_file_input(){
+            else{
+                cout << "Record Not Found! Try signing up";
+            }
+        }
+       void supplier_login_check(supplier x, int &present){
+           //Checking if record is present in file;
+           present = 0;
+           fstream supply_file;
+           supplier s;
+           supply_file.open("supplier.txt", ios::in | ios::binary);
+           //Looping and reading all file contents
+           while (supply_file.read((char *)&s, sizeof(s)))
+           {
+               if (s.supplier_username == x.supplier_username && s.supplier_password == x.supplier_password){
+                   present = 1;
+               }
+           }
+           supply_file.close();
+       }        
+     
+    void supplier_file_input()
+    {
         fstream supply_file;
-        supply_file.open("supplier.txt",ios::app|ios::binary);
-
+        supplier s;
+        s.supplier_signup();
+        supply_file.open("supplier.txt", ios::app | ios::binary);
+        supply_file.write((char *)&s, sizeof(s));
+        supply_file.close();
     }
+    void supplier_menu()
+    {
+        char x;
+        do
+        {
+            cout << "\nWelcome To Supplier Area. \n Do you have an Existing account?\n"
+                 << "[1]Yes [2]No (Press 0 to exit)";
+            cin >> x;
+            if (x == '1')
+            {
+                clear();
+                supplier_login();
+            }
+            else if (x == '2')
+            {
+                clear();
+                supplier_file_input();
+            }
+            else if (x == '0')
+            {
+                break;
+            }
 
+            else
+            {
+                cout << "Enter valid input";
+            }
+
+        } while (x != '0');
+    }
 };
+
 
 void menu(){
     char a;
@@ -106,7 +135,9 @@ void menu(){
         if (a == '1')
         {
             clear();
-            cout << "GTFO broke";
+            supplier supply_session;
+            supply_session.supplier_menu();
+
     }
     else if (a == '2')
     {
@@ -129,7 +160,6 @@ void menu(){
 }
 int main(){
     system("clear");
-
     menu();
     return 0;
 }

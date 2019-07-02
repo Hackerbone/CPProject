@@ -9,7 +9,7 @@ void clear(){
 }
 
 class supplier{
-    //about supplier
+    //About Supplier
     string supplier_name;
     string supplier_password;
     string supplier_sname;

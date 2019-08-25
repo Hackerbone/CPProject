@@ -4,6 +4,13 @@
 #include <string.h>
 using namespace std;
 
+void hr(int x){
+    cout << "+";
+    for(int i=0;i<x;i++){
+        cout << "-";
+    }
+    cout << "+\n";
+}
 void clear(){
     system("clear");
 }
@@ -21,8 +28,8 @@ class supplier{
     string product_symbol;
     public:
         void supplier_product_input()
-        {
-            cout << "Welcome To Supply Area. \nEnter Prouct name\n";
+        {   
+            cout << "|| Welcome To Product Selling || \nEnter Prouct name\n";
             cin >> product_name;
             cout  << "Enter Product Cost\n";
             cin >> product_cost;
@@ -36,7 +43,7 @@ class supplier{
             fstream product_file;
             supplier s;
             s.supplier_product_input();
-            product_file.open("products.txt", ios::app | ios::binary);
+            product_file.open("products.txt", ios::app);
             product_file.write((char*)&s, sizeof(s));
             product_file.close();
         }
@@ -44,12 +51,19 @@ class supplier{
             ifstream product_file;
             supplier s;
             product_file.open("products.txt");
-            product_file.read((char *)&s, sizeof(s));
-            while (!product_file.eof())
-            {
-                cout << s.product_name << " " << s.product_cost;
-            }
+            int i = 1;
+            cout << "| Sno |   Product    |   Cost   |   Color   |" << endl;
+            do
+            {   
+                product_file.read((char*)&s, sizeof(s));
+                cout <<"   " << i <<"     "<< s.product_name << "       "<< s.product_cost << "$        " << s.product_color << "\n";
+                hr(43);
+                i++;
+            } 
+            while(product_file.read((char*)&s, sizeof(s)));
             product_file.close();
+            cin.ignore();
+            cin.get();
         }
         void supplier_signup()
         {
@@ -89,13 +103,15 @@ class supplier{
        void supplier_login_check(supplier x, int &present){
            //Checking if record is present in file;
            present = 0;
-           fstream supply_file;
+           ifstream supply_file;
            supplier s;
-           supply_file.open("supplier.txt", ios::in | ios::binary);
+           supply_file.open("supplier.txt", ios::in);
            //Looping and reading all file contents
-           while (supply_file.read((char *)&s, sizeof(s)))
+           while (!supply_file.eof())
            {
-               if (s.supplier_username == x.supplier_username && s.supplier_password == x.supplier_password){
+               supply_file.read((char *)&s, sizeof(s));
+               if (s.supplier_username == x.supplier_username && s.supplier_password == x.supplier_password)
+               {
                    present = 1;
                }
            }
@@ -107,8 +123,8 @@ class supplier{
         fstream supply_file;
         supplier s;
         s.supplier_signup();
-        supply_file.open("supplier.txt", ios::app | ios::binary);
-        supply_file.write((char *)&s, sizeof(s));
+        supply_file.open("supplier.txt", ios::app);
+        supply_file.write((char*)&s, sizeof(s));
         supply_file.close();
     }
 
@@ -116,9 +132,9 @@ class supplier{
     {
         char x;
         do
-        {
-            cout << "\nWelcome To Supplier Area. \n Do you have an Existing account?\n"
-                 << "[1]Yes [2]No (Press 0 to exit)";
+        {   system("clear");
+            cout << "|| Welcome To Supplier Area ||\n"
+                 << "[1]Login\n[2]Signup \n([0] to exit)\n > ";
             cin >> x;
             if (x == '1')
             {
@@ -155,9 +171,9 @@ void menu(){
     char a;
     //Do menu starts
     do{
-
-        cout << "Welcome to Estore where you can buy or supply Electronic Products!\n"
-             << "Are you a [1] Supplier or [2] Customer ? (Enter the character corresponding to the action. Press [0] to Exit)\n";
+        system("clear");
+        cout << "|| Welcome to Estore where you can buy or supply Electronic Products! ||\n"
+             << "[1] Supplier \n[2] Customer \n\n([0] to Exit)\n> ";
         cin >> a;
         if (a == '1')
         {
@@ -169,7 +185,8 @@ void menu(){
     else if (a == '2')
     {
         clear();
-        cout << "hi broke" ;
+        supplier x;
+        x.view();
     }
     else if (a == '0')
     {
@@ -185,8 +202,9 @@ void menu(){
 
 
 }
-int main(){
-    system("clear");
-    menu();
-    return 0;
-}
+
+    int main(){
+        system("clear");
+        menu();
+        return 0;
+    }

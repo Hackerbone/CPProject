@@ -43,7 +43,7 @@ class supplier{
             fstream product_file;
             supplier s;
             s.supplier_product_input();
-            product_file.open("products.txt", ios::app);
+            product_file.open("products.txt", ios::out | ios::app | ios::binary);
             product_file.write((char*)&s, sizeof(s));
             product_file.close();
         }
@@ -105,7 +105,7 @@ class supplier{
            present = 0;
            ifstream supply_file;
            supplier s;
-           supply_file.open("supplier.txt", ios::in);
+           supply_file.open("supplier.txt", ios::in | ios::binary);
            //Looping and reading all file contents
            while (!supply_file.eof())
            {
